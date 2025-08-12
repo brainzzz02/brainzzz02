@@ -3,30 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brainz02 - Cybersecurity Specialist</title>
+<title>brainz02 - cyber portfolio</title>
 <style>
     body {
         margin: 0;
         font-family: 'Courier New', monospace;
-        background-color: #0d1117;
-        color: #00ffcc;
+        background-color: #000;
+        color: #fff;
         overflow-x: hidden;
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff;
     }
-    canvas#matrix {
+    canvas#snow {
         position: fixed;
         top: 0;
         left: 0;
         z-index: -1;
         width: 100%;
         height: 100%;
-        background: #0d1117;
+        background: #000;
     }
     header {
         text-align: center;
         padding: 3rem 1rem;
         font-size: 2.5rem;
         font-weight: bold;
-        text-shadow: 0 0 15px #00ffcc;
+        text-shadow: 0 0 10px #fff, 0 0 20px #ccc;
     }
     section {
         padding: 3rem 1rem;
@@ -35,11 +36,12 @@
         animation: fadeIn 1s ease forwards;
     }
     h2 {
-        color: #00ffcc;
-        border-bottom: 2px solid #00ffcc;
+        color: #fff;
+        border-bottom: 2px solid #fff;
         padding-bottom: .5rem;
         margin-bottom: 1rem;
         font-size: 1.8rem;
+        text-shadow: 0 0 5px #fff;
     }
     .skills-grid {
         display: grid;
@@ -48,15 +50,15 @@
         text-align: center;
     }
     .skill {
-        background: rgba(0, 255, 204, 0.05);
-        border: 1px solid #00ffcc;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #fff;
         border-radius: 10px;
         padding: 1rem;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out, background 0.2s;
     }
     .skill:hover {
         transform: scale(1.05);
-        background: rgba(0, 255, 204, 0.1);
+        background: rgba(255, 255, 255, 0.1);
     }
     .skill img {
         width: 40px;
@@ -67,8 +69,8 @@
     .fact {
         margin: 1rem 0;
         padding: 1rem;
-        border-left: 3px solid #00ffcc;
-        background: rgba(0, 255, 204, 0.05);
+        border-left: 3px solid #fff;
+        background: rgba(255, 255, 255, 0.05);
         font-size: 1.1rem;
     }
     .contact {
@@ -76,8 +78,9 @@
         font-size: 1.2rem;
     }
     .contact a {
-        color: #00ffcc;
+        color: #fff;
         text-decoration: none;
+        text-shadow: 0 0 5px #fff;
     }
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
@@ -87,23 +90,23 @@
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
+<canvas id="snow"></canvas>
 
-<header>💻 Brainz02 - Cybersecurity Specialist</header>
+<header>❄ brainz02 - cyber security specialist ❄</header>
 
 <section id="intro">
-    <h2>👋 About Me</h2>
-    <div class="fact">🎓 Cybersecurity Graduate</div>
-    <div class="fact">🛠 Fixing PCs since the age of 4</div>
-    <div class="fact">💻 Retired Cheat Developer</div>
-    <div class="fact">🕵 Malware Analysis Agent</div>
-    <div class="fact">⚙ Developer of custom ESP32 firmware</div>
-    <div class="fact">🎯 Scam Baiter — have tracked and hacked scammers in the past</div>
-    <div class="fact">📹 Planning to release scam-baiting & cyber investigations on YouTube — stay tuned for updates</div>
+    <h2>👋 about me</h2>
+    <div class="fact">🎓 cyber security graduate</div>
+    <div class="fact">🛠 fixing pcs since the age of 4</div>
+    <div class="fact">💻 retired cheat developer</div>
+    <div class="fact">🕵 malware analysis agent</div>
+    <div class="fact">⚙ developer of custom esp32 firmware</div>
+    <div class="fact">🎯 scam baiter — tracked & hacked scammers before</div>
+    <div class="fact">📹 youtube content coming soon — scam baiting & cyber ops</div>
 </section>
 
 <section id="skills">
-    <h2>💡 Technical Skills</h2>
+    <h2>💡 technical skills</h2>
     <div class="skills-grid">
         <div class="skill">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
@@ -141,36 +144,54 @@
 </section>
 
 <section id="contact">
-    <h2>📬 Contact</h2>
+    <h2>📬 contact</h2>
     <div class="contact">
-        Reach me at: <a href="mailto:simonleau20@gmail.com">simonleau20@gmail.com</a>
+        reach me at: <a href="mailto:simonleau20@gmail.com">simonleau20@gmail.com</a>
     </div>
 </section>
 
 <script>
-    const canvas = document.getElementById('matrix');
+    const canvas = document.getElementById('snow');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    const letters = '01';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    function draw() {
-        ctx.fillStyle = 'rgba(13, 17, 23, 0.1)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#00ffcc';
-        ctx.font = fontSize + 'px monospace';
-        for (let i = 0; i < drops.length; i++) {
-            const text = letters.charAt(Math.floor(Math.random() * letters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+    const particles = [];
+    const particleCount = 200;
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 1,
+            speedY: Math.random() * 1 + 0.5
+        });
+    }
+
+    function drawSnow() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.moveTo(p.x, p.y);
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, true);
+        }
+        ctx.fill();
+        moveSnow();
+    }
+
+    function moveSnow() {
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.y += p.speedY;
+            if (p.y > canvas.height) {
+                p.y = 0;
+                p.x = Math.random() * canvas.width;
             }
-            drops[i]++;
         }
     }
-    setInterval(draw, 33);
+
+    setInterval(drawSnow, 33);
 </script>
 
 </body>
